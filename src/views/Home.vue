@@ -1,18 +1,37 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="Home">
+    <Header/>
+    <Main/>
+    <Footer/>
+    <ModalWindow v-if="showModal"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Header from "../components/Header";
+import Main from "../components/Main";
+import Footer from "../components/Footer";
+import ModalWindow from "../components/ModalWindow";
+import { mapState } from "vuex";
 
 export default {
   name: "home",
+
   components: {
-    HelloWorld
+    Header,
+    Main,
+    Footer,
+    ModalWindow
+  },
+  computed: {
+    ...mapState({
+      showModal: state => state.showModal
+    })
   }
 };
 </script>
+ 
+ <style lang="scss">
+</style>
+ 
+

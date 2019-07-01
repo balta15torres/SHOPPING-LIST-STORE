@@ -1,0 +1,35 @@
+<template>
+  <div class="Header">
+    <div class="Header__logo">
+      <img alt="Vue logo" src="../assets/logo.png">
+    </div>
+    <h1>Shopping list</h1>
+    <hr>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Header"
+};
+</script>
+ 
+ <style lang="scss">
+.Header {
+  width: 50%;
+
+  .Header__logo {
+    display: flex;
+    justify-content: center;
+    img {
+      margin: 20px;
+      height: 100px;
+    }
+  }
+  h1 {
+    color: $blue-vue;
+    display: flex;
+    justify-content: center;
+  }
+}
+</style>
