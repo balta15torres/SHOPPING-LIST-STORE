@@ -61,16 +61,16 @@ export default new Vuex.Store({
       //console.log(newLis)
       commit("FILL_SHOPPINGLIST", newLis)
     },
-    // editItem({ commit, state }){
-    //   let { shoppingList } = state
-    //   let array = shoppingList
-    //   //console.log(shoppingList)
-    //  const names = array.map(elemt=>(elemt.editing))
-    // console.log(names)
+    editItem({ commit, state }){
+      let { shoppingList } = state
+      let array = shoppingList
+      //console.log(shoppingList)
+     const names = array.filter(elemt=>elemt.editing = true)
+    console.log(names)
    
       
       
-    //  commit("CHANGE_EDITING", names  )
-    // }
+     commit("CHANGE_EDITING", names  )
+    }
   }
 });

@@ -87,11 +87,11 @@ export default {
       this.removeItem({ id });
       this.changeShow();
     },
-    // editingItem(){
-    //   //this.beforeEditItemCache = editing.name
+    editingItem(){
+      //this.beforeEditItemCache = editing.name
       
-    //   this.editItem()
-    // }
+      this.editItem()
+    }
   }
 };
 </script>
