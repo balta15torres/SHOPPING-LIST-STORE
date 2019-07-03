@@ -29,9 +29,15 @@ export default new Vuex.Store({
     CANCEL_MODAL(state, chang) {
       state.showModal = chang
     },
-    CHANGE_EDITING(state,chan){
-      state.shoppingList.editing = chan
+    CHANGE_EDITING(state, id) {
+      state.shoppingList = state.shoppingList.map(item => item.id === id ? { ...item, editing: true } : item)
     },
+    MARK_ALL_COMPLETE(state) {
+      state.shoppingList = state.shoppingList.map(
+        item => ({ ...item, complete: !item.complete })
+      );
+    }
+
   },
   actions: {
     addItem({ commit, state }, { item }) {
@@ -61,16 +67,11 @@ export default new Vuex.Store({
       //console.log(newLis)
       commit("FILL_SHOPPINGLIST", newLis)
     },
-    editItem({ commit, state }){
-      let { shoppingList } = state
-      let array = shoppingList
-      //console.log(shoppingList)
-     const names = array.filter(elemt=>elemt.editing = true)
-    console.log(names)
-   
-      
-      
-     commit("CHANGE_EDITING", names  )
+    editItem({ commit }, { id }) {
+      commit("CHANGE_EDITING", id)
+    },
+    markAll({ commit }) {
+      commit("MARK_ALL_COMPLETE")
     }
   }
 });

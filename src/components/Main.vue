@@ -7,36 +7,39 @@
         key="newItem-input"
         v-model="newItem"
         @keyup.enter="createItem"
-      >
+      />
       <button @click="createItem">
-        <img src="../../public/icons/add.svg" alt>
+        <img src="../../public/icons/add.svg" alt />
       </button>
     </div>
-    <hr>
+    <hr />
     <div class="Main__li" v-for="item in shoppingList" :key="item.id">
       <ul>
         <div class="Main__li--list">
           <li>
-            <input type="checkbox">
-            <p>{{item.name}}</p>
+            <input type="checkbox" v-model="item.complete" />
+            <p :class="{ complete : item.complete == true}">{{item.name}}</p>
           </li>
         </div>
         <div class="Main__li--buttons">
           <button class="Main__li--delete" @click="deleteItem(item.id)">
-            <img src="../../public/icons/delete.svg" alt>
+            <img src="../../public/icons/delete.svg" alt />
           </button>
-          <button class="Main__li--edit"  v-if="!item.editing" @click="editingItem(item)">
-          <!-- <button class="Main__li--edit"  v-if="!item.editing" @click="editingItem(item)"> -->
-            <img src="../../public/icons/pencil-edit-button.svg" alt>
-            
+          <button class="Main__li--edit" v-if="!item.editing" @click="editingItem(item.id)">
+            <img src="../../public/icons/pencil-edit-button.svg" alt />
           </button>
-        <input type="text" v-else v-model="item.name">
-          {{item.editing}}
-          
+          <input
+            type="text"
+            v-else
+            v-model="item.name"
+            @keyup.enter="doneEditItem(item)"
+            @blur="doneEditItem(item)"
+            @keyup.esc="beforeEditItem(item)"
+          />
         </div>
       </ul>
     </div>
-    <hr>
+    <hr />
   </div>
 </template>
 
@@ -56,7 +59,7 @@ export default {
     return {
       newItem: "",
       currentAction: null,
-      beforeEditItemCache : ""
+      beforeEditItemCache: ""
     };
   },
   computed: {
@@ -72,7 +75,8 @@ export default {
       addItem: "addItem",
       changeShow: "changeShow",
       removeItem: "removeItem",
-      editItem:"editItem"
+      editItem: "editItem"
+      // completeItem:"completeItem"
     }),
     createItem() {
       this.currentAction = "add";
@@ -87,10 +91,14 @@ export default {
       this.removeItem({ id });
       this.changeShow();
     },
-    editingItem(){
-      //this.beforeEditItemCache = editing.name
-      
-      this.editItem()
+    editingItem(id) {
+      this.editItem({ id });
+    },
+    doneEditItem(item) {
+      item.editing = false;
+    },
+    beforeEditItem(item) {
+      item.editing = false;
     }
   }
 };
@@ -159,6 +167,10 @@ export default {
       // background-color: red;
     }
   }
+}
+.complete {
+  text-decoration: line-through;
+  color: rgb(139, 1, 1);
 }
 </style>
 
