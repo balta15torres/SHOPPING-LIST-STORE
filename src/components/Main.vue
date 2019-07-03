@@ -45,7 +45,7 @@
 
 <script>
 import store from "../store";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 const actionsTextMapping = {
   add: "illo añade algo a la lista!",
@@ -63,9 +63,9 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      shoppingList: state => state.shoppingList
-    }),
+     ...mapGetters({
+       shoppingList: "itemsFiltered"
+     }),
     modalText() {
       return actionsTextMapping[this.currentAction];
     }
@@ -76,7 +76,6 @@ export default {
       changeShow: "changeShow",
       removeItem: "removeItem",
       editItem: "editItem"
-      // completeItem:"completeItem"
     }),
     createItem() {
       this.currentAction = "add";
@@ -111,7 +110,6 @@ export default {
     display: flex;
     padding-left: 0;
   }
-
   .Main__input {
     display: flex;
     justify-content: center;
@@ -164,7 +162,6 @@ export default {
       justify-content: flex-end;
       align-items: center;
       width: 50%;
-      // background-color: red;
     }
   }
 }

@@ -17,6 +17,7 @@ export default new Vuex.Store({
       },
     ],
     showModal: false,
+    filter: "all"
   },
   //mutauions sera donde registramos los eventos para cambiar el state
   mutations: {
@@ -34,10 +35,11 @@ export default new Vuex.Store({
     },
     MARK_ALL_COMPLETE(state) {
       state.shoppingList = state.shoppingList.map(
-        item => ({ ...item, complete: !item.complete })
-      );
+        item => item.complete === false ? { ...item, complete: !item.complete } : item)
+    },
+    SET_FILTER(state, filter) {
+      state.filter = filter
     }
-
   },
   actions: {
     addItem({ commit, state }, { item }) {
@@ -63,7 +65,7 @@ export default new Vuex.Store({
     },
     removeItem({ commit, state }, { id }) {
       //console.log({ id })
-      const newLis = [...state.shoppingList.filter(item => item.id !== id)]
+      const newLis = [...state.shoppingList.filter(item => item.id  !== id)]
       //console.log(newLis)
       commit("FILL_SHOPPINGLIST", newLis)
     },
@@ -72,6 +74,22 @@ export default new Vuex.Store({
     },
     markAll({ commit }) {
       commit("MARK_ALL_COMPLETE")
+    },
+    updateFilter({ commit }, { filter } ){
+      commit("SET_FILTER" ,filter)
+    }
+  },
+  getters: {
+    itemsFiltered(state) {
+      console.log(state.filter)
+      if (state.filter == "all") {
+        return state.shoppingList;
+      } else if (state.filter == "active") {
+        return state.shoppingList.filter(item => !item.complete)
+      } else if (state.filter == "complete") {
+        return state.shoppingList.filter(item => item.complete);
+      }
+      return state.shoppingList;
     }
   }
 });
