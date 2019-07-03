@@ -10,7 +10,6 @@
     </div>
     <hr />
     <div class="Footer__Buttons">
-     
       <button :class="{ active:filter == 'all'}" @click="setFilter('all')">All</button>
       <button :class="{ active:filter == 'active'}" @click="setFilter('active') ">Active</button>
       <button :class="{ active:filter == 'complete'}" @click="setFilter('complete')">Completed</button>
@@ -33,7 +32,7 @@ export default {
       shoppingList: state => state.shoppingList
     }),
     ...mapGetters({
-      itemsFiltered:"itemsFiltered"
+      itemsFiltered: "itemsFiltered"
     }),
 
     totalItems() {
@@ -45,24 +44,14 @@ export default {
       ).length;
       return filterComplete;
     }
-    // itemsFiltered() {
-    //   if (this.filter == "all") {
-    //     return this.shoppingList;
-    //   } else if (this.filter == "active") {
-    //     return this.shoppingList.filter(item => !item.complete);
-    //   } else if (this.filter == "complete") {
-    //     return this.shoppingList.filter(item => item.complete);
-    //   }
-    //   return this.shoppingList;
-    // }
   },
   methods: {
     ...mapActions({
       markAll: "markAll",
-      updateFilter:"updateFilter"
+      updateFilter: "updateFilter"
     }),
-    setFilter(filter){
-      this.updateFilter({filter})
+    setFilter(filter) {
+      this.updateFilter({ filter });
     }
   }
 };

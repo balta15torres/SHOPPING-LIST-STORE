@@ -21,7 +21,6 @@ export default {
       changeShow: "changeShow"
     }),
     ModalCancel() {
-      //console.log("<<<<<")
       this.changeShow();
     }
   }

@@ -19,7 +19,6 @@ export default new Vuex.Store({
     showModal: false,
     filter: "all"
   },
-  //mutauions sera donde registramos los eventos para cambiar el state
   mutations: {
     FILL_SHOPPINGLIST(state, list) {
       state.shoppingList = list
@@ -50,23 +49,18 @@ export default new Vuex.Store({
         complete: false
       }
       const newList = [...state.shoppingList, newItem]
-      //console.log(newList)
       commit("FILL_SHOPPINGLIST", newList)
     },
     changeShow({ commit, state }) {
       const newShowModal = !state.showModal
-      //console.log(newShowModal)
       commit("CHANGE_SHOWMODAL", newShowModal)
     },
     cancelModal({ commit, state }) {
       const changeModal = !state.newShowModal
-      //console.log(newShowModal)
       commit("CANCEL_MODAL", changeModal)
     },
     removeItem({ commit, state }, { id }) {
-      //console.log({ id })
       const newLis = [...state.shoppingList.filter(item => item.id  !== id)]
-      //console.log(newLis)
       commit("FILL_SHOPPINGLIST", newLis)
     },
     editItem({ commit }, { id }) {
