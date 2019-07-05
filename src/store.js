@@ -6,18 +6,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     shoppingList: [
-      {
-        id: 0, name: "manzana", editing: false, complete: false
-      },
-      {
-        id: 1, name: "pera", editing: false, complete: false
-      },
-      {
-        id: 2, name: "platano", editing: false, complete: false
-      },
+      { "id": 0, "name": "pera", "editing": false, "complete": false },
+      { "id": 1, "name": "manzana", "editing": false, "complete": false },
+      { "id": 2, "name": "melon", "editing": false, "complete": false },
     ],
     showModal: false,
-    filter: "all"
+    filter: "all",
   },
   mutations: {
     FILL_SHOPPINGLIST(state, list) {
@@ -38,7 +32,7 @@ export default new Vuex.Store({
     },
     SET_FILTER(state, filter) {
       state.filter = filter
-    }
+    },
   },
   actions: {
     addItem({ commit, state }, { item }) {
@@ -60,7 +54,7 @@ export default new Vuex.Store({
       commit("CANCEL_MODAL", changeModal)
     },
     removeItem({ commit, state }, { id }) {
-      const newLis = [...state.shoppingList.filter(item => item.id  !== id)]
+      const newLis = [...state.shoppingList.filter(item => item.id !== id)]
       commit("FILL_SHOPPINGLIST", newLis)
     },
     editItem({ commit }, { id }) {
@@ -69,13 +63,12 @@ export default new Vuex.Store({
     markAll({ commit }) {
       commit("MARK_ALL_COMPLETE")
     },
-    updateFilter({ commit }, { filter } ){
-      commit("SET_FILTER" ,filter)
-    }
+    updateFilter({ commit }, { filter }) {
+      commit("SET_FILTER", filter)
+    },
   },
   getters: {
     itemsFiltered(state) {
-      console.log(state.filter)
       if (state.filter == "all") {
         return state.shoppingList;
       } else if (state.filter == "active") {

@@ -13,12 +13,12 @@
       </button>
     </div>
     <hr />
-    <div class="Main__li" v-for="item in shoppingList" :key="item.id">
+    <div class="Main__li" v-for="item in filteredList" :key="item.id">
       <ul>
         <div class="Main__li--list">
-          <li>
+          <li :class="{'edit' : item.editing}">
             <input type="checkbox" v-model="item.complete" />
-            <p :class="{ complete : item.complete == true}">{{item.name}}</p>
+            <p :class="{ 'complete' : item.complete, 'edit' : item.editing}">{{item.name}}</p>
           </li>
         </div>
         <div class="Main__li--buttons">
@@ -48,8 +48,8 @@ import store from "../store";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 const actionsTextMapping = {
-  add: "illo añade algo a la lista!",
-  delete: "eo seguro que quieres borrarlo?"
+  delete: "Are you sure you want to delete it?",
+  add: "add items to your list!"
 };
 
 export default {
@@ -59,18 +59,31 @@ export default {
     return {
       newItem: "",
       currentAction: null,
-      beforeEditItemCache: ""
+      beforeEditItemCache: "",
+
+      inputSearch: ""
     };
   },
   computed: {
-     ...mapGetters({
-       shoppingList: "itemsFiltered"
-     }),
+    filteredList() {
+      return this.shoppingList.filter(item =>
+        item.name.toLowerCase().includes(this.newItem.toLowerCase())
+      );
+    },
+    ...mapGetters({
+      shoppingList: "itemsFiltered"
+    }),
     modalText() {
-      return actionsTextMapping[this.currentAction];
+      return console.log(actionsTextMapping[this.currentAction]);
+      //actionsTextMapping[this.currentAction];
     }
   },
   methods: {
+    // filteredList() {
+    //   this.shoppingList.filter(item =>
+    //     item.name.toLowerCase().includes(this.newItem.toLowerCase())
+    //   );
+    // },
     ...mapActions({
       addItem: "addItem",
       changeShow: "changeShow",
@@ -79,16 +92,21 @@ export default {
     }),
     createItem() {
       this.currentAction = "add";
+      console.log(this.currentAction);
       if (this.newItem.trim().length == 0) this.changeShow();
       this.addItem({ item: this.newItem });
       this.cleanInput();
+      this.modalText;
     },
     cleanInput() {
       this.newItem = "";
     },
     deleteItem(id) {
+      this.currentAction = "delete";
+      console.log(this.currentAction);
       this.removeItem({ id });
       this.changeShow();
+      this.modalText;
     },
     editingItem(id) {
       this.editItem({ id });
@@ -167,6 +185,10 @@ export default {
 }
 .complete {
   text-decoration: line-through;
+  color: rgb(139, 1, 1);
+}
+.edit {
+  text-decoration: underline;
   color: rgb(139, 1, 1);
 }
 </style>

@@ -11,9 +11,10 @@
     <hr />
     <div class="Footer__Buttons">
       <button :class="{ active:filter == 'all'}" @click="setFilter('all')">All</button>
-      <button :class="{ active:filter == 'active'}" @click="setFilter('active') ">Active</button>
+      <button :class="{ active:filter == 'active'}" @click="setFilter('active')">Active</button>
       <button :class="{ active:filter == 'complete'}" @click="setFilter('complete')">Completed</button>
     </div>
+    
     <hr />
   </div>
 </template>
@@ -24,7 +25,7 @@ export default {
   name: "Footer",
   data() {
     return {
-      filter: "all"
+      filter: "all",
     };
   },
   computed: {
@@ -48,11 +49,13 @@ export default {
   methods: {
     ...mapActions({
       markAll: "markAll",
-      updateFilter: "updateFilter"
+      updateFilter: "updateFilter",
     }),
     setFilter(filter) {
       this.updateFilter({ filter });
-    }
+      this.filter = filter
+    },
+   
   }
 };
 </script>

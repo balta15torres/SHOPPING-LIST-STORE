@@ -1,21 +1,16 @@
 <template>
   <div class="ModalWindow">
     <div class="ModalWindow__poput">
-      <p>{{text}}</p>
+      <p></p>
       <button @click="ModalCancel">cancel</button>
     </div>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
+
 export default {
   name: "ModalWindow",
-  props: {
-    text: {
-      type: String
-    }
-  },
-
   methods: {
     ...mapActions({
       changeShow: "changeShow"
