@@ -60,8 +60,6 @@ export default {
       newItem: "",
       currentAction: null,
       beforeEditItemCache: "",
-
-      inputSearch: ""
     };
   },
   computed: {
