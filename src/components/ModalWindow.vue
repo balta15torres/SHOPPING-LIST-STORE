@@ -1,8 +1,20 @@
 <template>
   <div class="ModalWindow">
     <div class="ModalWindow__poput">
-      <p></p>
-      <button @click="ModalCancel">cancel</button>
+      {{actionsText}}
+      <div class="ModalWindow__poput--btns">
+        <button @click="ModalCancel" v-if="isAdding">
+          <img src="../../public/icons/check.svg" alt />
+        </button>
+        <div v-else>
+          <button @click="ModalCancel">
+            <img src="../../public/icons/delete.svg" alt />
+          </button>
+          <button @click="ModalCancel">
+            <img src="../../public/icons/close.svg" alt />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +23,19 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ModalWindow",
+  props: {
+    actionsText: {
+      type: String
+    }
+  },
+  computed: {
+    isAdding() {
+      return this.currentAction === "add";
+    },
+    ...mapState({
+      currentAction: state => state.currentAction
+    })
+  },
   methods: {
     ...mapActions({
       changeShow: "changeShow"
@@ -25,7 +50,6 @@ export default {
 .ModalWindow {
   align-items: center;
   background-color: $blue-modal;
-
   bottom: 0;
   display: flex;
   justify-content: space-evenly;
@@ -44,7 +68,20 @@ export default {
   box-shadow: 0 0 8px 0 rgb(255, 255, 255);
   width: 400px;
   height: 100px;
-  background-color: rgb(66, 185, 131);
+  background-color: $green-vue;
+}
+.ModalWindow__poput--btns {
+  button {
+    margin: 8px;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: $blue-vue;
+    img {
+      width: 15px;
+      margin-top: 3px;
+    }
+  }
 }
 </style>
 

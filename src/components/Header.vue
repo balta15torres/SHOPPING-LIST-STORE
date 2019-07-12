@@ -1,16 +1,22 @@
 <template>
   <div class="Header">
     <div class="Header__logo">
-      <img alt="Vue logo" src="../assets/logo.png">
+      <img alt="Vue logo" src="../assets/logo.png" />
     </div>
     <h1>Shopping list</h1>
-    <hr>
+    <hr />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  name: "Header"
+  name: "Header",
+  computed: {
+    ...mapState({
+      shoppingList: state => state.shoppingList
+    })
+  }
 };
 </script>
  

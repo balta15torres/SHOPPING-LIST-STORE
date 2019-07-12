@@ -6,9 +6,9 @@
         placeholder=" add name of item"
         key="newItem-input"
         v-model="newItem"
-        @keyup.enter="createItem"
+        @keyup.enter="createItem()"
       />
-      <button @click="createItem">
+      <button @click="createItem()">
         <img src="../../public/icons/add.svg" alt />
       </button>
     </div>
@@ -18,7 +18,7 @@
         <div class="Main__li--list">
           <li :class="{'edit' : item.editing}">
             <input type="checkbox" v-model="item.complete" />
-            <p :class="{ 'complete' : item.complete, 'edit' : item.editing}">{{item.name}}</p>
+            <p :class="{ 'complete' : item.complete, 'edit' : item.editing}" v-text="item.name" />
           </li>
         </div>
         <div class="Main__li--buttons">
@@ -47,19 +47,13 @@
 import store from "../store";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-const actionsTextMapping = {
-  delete: "Are you sure you want to delete it?",
-  add: "add items to your list!"
-};
-
 export default {
   name: "Main",
   store,
   data() {
     return {
       newItem: "",
-      currentAction: null,
-      beforeEditItemCache: "",
+      beforeEditItemCache: ""
     };
   },
   computed: {
@@ -70,41 +64,29 @@ export default {
     },
     ...mapGetters({
       shoppingList: "itemsFiltered"
-    }),
-    modalText() {
-      return console.log(actionsTextMapping[this.currentAction]);
-      //actionsTextMapping[this.currentAction];
-    }
+    })
   },
   methods: {
-    // filteredList() {
-    //   this.shoppingList.filter(item =>
-    //     item.name.toLowerCase().includes(this.newItem.toLowerCase())
-    //   );
-    // },
     ...mapActions({
       addItem: "addItem",
       changeShow: "changeShow",
       removeItem: "removeItem",
-      editItem: "editItem"
+      editItem: "editItem",
+      changeTextmodal: "changeTextmodal"
     }),
     createItem() {
-      this.currentAction = "add";
-      console.log(this.currentAction);
-      if (this.newItem.trim().length == 0) this.changeShow();
+      if (this.newItem.trim().length == 0)this.changeShow();
       this.addItem({ item: this.newItem });
+      this.changeTextmodal()
       this.cleanInput();
-      this.modalText;
     },
     cleanInput() {
       this.newItem = "";
     },
     deleteItem(id) {
-      this.currentAction = "delete";
-      console.log(this.currentAction);
-      this.removeItem({ id });
       this.changeShow();
-      this.modalText;
+      this.removeItem({ id });
+      this.changeTextmodal();
     },
     editingItem(id) {
       this.editItem({ id });
@@ -150,7 +132,6 @@ export default {
       li {
         display: flex;
         justify-content: flex-start;
-        // background-color: blue;
         font-size: 20px;
         p {
           padding-left: 20px;

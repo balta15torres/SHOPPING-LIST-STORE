@@ -3,7 +3,7 @@
     <div class="Footer__summary">
       <label>
         <input type="checkbox" @change="markAll" />
-        check All
+        {{text}}
       </label>
       <p>{{totalItems}} total items</p>
       <p>{{totalItemsLeft}} items left</p>
@@ -14,7 +14,6 @@
       <button :class="{ active:filter == 'active'}" @click="setFilter('active')">Active</button>
       <button :class="{ active:filter == 'complete'}" @click="setFilter('complete')">Completed</button>
     </div>
-    
     <hr />
   </div>
 </template>
@@ -26,6 +25,7 @@ export default {
   data() {
     return {
       filter: "all",
+      text: "check All"
     };
   },
   computed: {
@@ -35,7 +35,6 @@ export default {
     ...mapGetters({
       itemsFiltered: "itemsFiltered"
     }),
-
     totalItems() {
       return this.shoppingList.length;
     },
@@ -49,13 +48,15 @@ export default {
   methods: {
     ...mapActions({
       markAll: "markAll",
-      updateFilter: "updateFilter",
+      updateFilter: "updateFilter"
     }),
     setFilter(filter) {
       this.updateFilter({ filter });
-      this.filter = filter
+      this.filter = filter;
     },
-   
+    markAll() {
+      this.shoppingList.forEach(item => (item.complete = event.target.checked));
+    }
   }
 };
 </script>
