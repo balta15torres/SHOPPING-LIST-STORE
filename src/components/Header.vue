@@ -23,7 +23,8 @@ export default {
  <style lang="scss">
 .Header {
   width: 50%;
-
+font-weight:bold;
+      color:$blue-vue;
   .Header__logo {
     display: flex;
     justify-content: center;
@@ -33,7 +34,6 @@ export default {
     }
   }
   h1 {
-    color: $blue-vue;
     display: flex;
     justify-content: center;
   }

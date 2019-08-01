@@ -23,17 +23,18 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ModalWindow",
-  props: {
-    actionsText: {
-      type: String
-    }
-  },
+  //props: {
+  //  actionsText: {
+  //    type: String
+  //  }
+  //},
   computed: {
     isAdding() {
       return this.currentAction === "add";
     },
     ...mapState({
-      currentAction: state => state.currentAction
+      currentAction: state => state.currentAction,
+      actionsText: state => state.actionsText
     })
   },
   methods: {

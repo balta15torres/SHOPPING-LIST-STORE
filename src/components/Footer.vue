@@ -2,11 +2,16 @@
   <div class="Footer">
     <div class="Footer__summary">
       <label>
-        <input type="checkbox" @change="markAll" />
+        <input type="checkbox" @change="markAll()" />
         {{text}}
       </label>
       <p>{{totalItems}} total items</p>
       <p>{{totalItemsLeft}} items left</p>
+      <button
+        v-if="totalItemsLeft < totalItems"
+        class="Main__li--botnDeleteAll"
+        @click="deleteMarked"
+      >delete Marked</button>
     </div>
     <hr />
     <div class="Footer__Buttons">
@@ -47,15 +52,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      markAll: "markAll",
-      updateFilter: "updateFilter"
+      removeItem: "removeItem",
+      updateFilter: "updateFilter",
+      changeShow: "changeShow",
+      changeTextmodal:"changeTextmodal"
     }),
     setFilter(filter) {
-      this.updateFilter({ filter });
+      //this.updateFilter({ filter });
       this.filter = filter;
+       this.shoppingList.forEach(item =>!item.complete ? console.log("no hay") : this.updateFilter({ filter }));
     },
     markAll() {
       this.shoppingList.forEach(item => (item.complete = event.target.checked));
+    },
+    deleteMarked() {
+      this.changeShow()
+      this.changeTextmodal();
+      this.shoppingList.filter(item =>
+        item.complete ? this.removeItem(item) : ""
+      );
     }
   }
 };
@@ -64,10 +79,32 @@ export default {
 <style lang="scss">
 .Footer {
   width: 50%;
+  font-weight:bold;
+  color: $blue-vue;
   .Footer__summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 40px;
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $green-vue;
+      border: 2px outset #dddddd;
+      border-radius: 5px;
+      height: 35px;
+      width: 25%;
+    }
+    .Main__li--botnDeleteAll {
+      height: 39px;
+      width: 25%;
+      border-radius: 5px;
+      background-color:$red-complete;
+      font-size: 15px;
+      font-weight:bold;
+      color: $blue-vue;
+    }
   }
   .Footer__Buttons {
     margin: 20px;
@@ -75,15 +112,16 @@ export default {
     align-items: center;
     justify-content: center;
     .active {
-      background-color: #42b983;
-      color: black;
+      background-color: $green-vue;
+      color:$blue-vue;
     }
     button {
       border-radius: 5px;
-      background-color: #35495e;
-      color: #42b983;
+      background-color: $blue-vue;
+      color: $green-vue;
       margin-right: 15px;
-      height: 35px;
+      height: 40px;
+      font-weight:bold;
     }
   }
 }

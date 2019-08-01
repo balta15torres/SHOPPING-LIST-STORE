@@ -15,28 +15,41 @@
     <hr />
     <div class="Main__li" v-for="item in filteredList" :key="item.id">
       <ul>
-        <div class="Main__li--list">
-          <li :class="{'edit' : item.editing}">
-            <input type="checkbox" v-model="item.complete" />
-            <p :class="{ 'complete' : item.complete, 'edit' : item.editing}" v-text="item.name" />
-          </li>
-        </div>
-        <div class="Main__li--buttons">
-          <button class="Main__li--delete" @click="deleteItem(item.id)">
-            <img src="../../public/icons/delete.svg" alt />
-          </button>
-          <button class="Main__li--edit" v-if="!item.editing" @click="editingItem(item.id)">
-            <img src="../../public/icons/pencil-edit-button.svg" alt />
-          </button>
+        <template v-if="!item.editing">
+          <div class="Main__li--list">
+            <li :class="{'edit' : item.editing}">
+              <input type="checkbox" v-model="item.complete" />
+              <p :class="{ 'complete' : item.complete, 'edit' : item.editing}">{{item.name}}</p>
+            </li>
+          </div>
+          <div class="Main__li--buttons">
+            <button class="Main__li--delete" @click="deleteItem(item.id)">
+              <img src="../../public/icons/delete.svg" alt />
+            </button>
+            <button class="Main__li--edit" @click="editingItem(item.name,item.id)">
+              <img src="../../public/icons/pencil-edit-button.svg" alt />
+            </button>
+          </div>
+        </template>
+        <template v-else>
           <input
+            class="input__editing"
             type="text"
-            v-else
-            v-model="item.name"
-            @keyup.enter="doneEditItem(item)"
-            @blur="doneEditItem(item)"
-            @keyup.esc="beforeEditItem(item)"
+            :class="{ 
+              'complete' : item.complete, 
+              'edit' : item.editing
+              }"
+            v-model="beforeEditItemCache"
           />
-        </div>
+          <div class="Main__btns--editing">
+            <button class="Main__li--editing" @click="doneEditItem(item)">
+              <img src="../../public/icons/check.svg" alt />
+            </button>
+            <button class="Main__li--editing" @click="beforeEditItem(item)">
+              <img src="../../public/icons/close.svg" alt />
+            </button>
+          </div>
+        </template>
       </ul>
     </div>
     <hr />
@@ -53,6 +66,7 @@ export default {
   data() {
     return {
       newItem: "",
+      itemCreate: false,
       beforeEditItemCache: ""
     };
   },
@@ -72,13 +86,25 @@ export default {
       changeShow: "changeShow",
       removeItem: "removeItem",
       editItem: "editItem",
-      changeTextmodal: "changeTextmodal"
+      changeTextmodal: "changeTextmodal",
+      checking: "checking"
     }),
     createItem() {
-      if (this.newItem.trim().length == 0)this.changeShow();
+      //  let er = /^[a-z]{3,}$/i;
+      //   let rta = er.test(this.newItem);
+      //    rta === true
+      //      ? (this.addItem({ item: this.newItem }),this.cleanInput())
+      //      : (this.changeTextmodal(),this.changeShow(),this.cleanInput())
+      // let number = /[1-9]/
+      // let rta = number.test(this.newItem);
+      //this.changeShow()
+      //if(this.newItem == "")console.log("no hay nada")
+      //else if(rta === true )console.log("solo letras")
+      //else if(this.newItem.length != 3)console.log("te faltan letras")
+      //else this.addItem({ item: this.newItem }),this.cleanInput()
       this.addItem({ item: this.newItem });
-      this.changeTextmodal()
-      this.cleanInput();
+      this.changeTextmodal();
+      console.log(this.actionsText);
     },
     cleanInput() {
       this.newItem = "";
@@ -88,15 +114,19 @@ export default {
       this.removeItem({ id });
       this.changeTextmodal();
     },
-    editingItem(id) {
+    editingItem(name, id) {
+      this.beforeEditItemCache = name;
+      //con esta iteracion, no podremos editar varios item a la vez.
+      this.shoppingList.forEach(item => (item.editing = false));
       this.editItem({ id });
     },
     doneEditItem(item) {
+      item.name = this.beforeEditItemCache;
       item.editing = false;
     },
     beforeEditItem(item) {
       item.editing = false;
-    }
+    },
   }
 };
 </script>
@@ -117,6 +147,9 @@ export default {
       border-radius: 5px;
       height: 30px;
       width: 75%;
+      font-weight:bold;
+      color:$blue-vue;
+      margin-left: 10px;
     }
     button {
       background-color: $green-vue;
@@ -129,6 +162,8 @@ export default {
   .Main__li {
     .Main__li--list {
       width: 50%;
+      font-weight:bold;
+      color:$blue-vue;
       li {
         display: flex;
         justify-content: flex-start;
@@ -154,21 +189,39 @@ export default {
     .Main__li--delete {
       background-color: $blue-vue;
     }
+    .input__editing {
+      margin-top:22px;
+      border-radius: 5px;
+      height: 35px;
+      font-size: 18px;
+      padding-left: 10px;
+      width: 50%;
+    }
     .Main__li--buttons {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       width: 50%;
     }
+    .Main__btns--editing {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 50%;
+    }
+    .Main__li--editing {
+      background-color: $blue-vue;
+    }
   }
+  
 }
 .complete {
   text-decoration: line-through;
-  color: rgb(139, 1, 1);
+  color: $red-complete;
 }
 .edit {
   text-decoration: underline;
-  color: rgb(139, 1, 1);
+  color: $red-complete;
 }
 </style>
 

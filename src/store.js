@@ -4,8 +4,14 @@ Vue.use(Vuex);
 
 const actionsTextMapping = {
   delete: "Are you sure you want to delete it?",
-  add: "add items to your list!"
-};
+  add:
+  {
+    option1: "Add product name!",
+    option2: "Product name only letters!",
+    option3: "Product name minimum 3 letters!"
+
+  }
+}
 
 export default new Vuex.Store({
   state: {
@@ -49,6 +55,12 @@ export default new Vuex.Store({
       }
       const newList = [...state.shoppingList, newItem]
       state.currentAction = "add";
+       let number = /[1-9]/
+       let rta = number.test(newItem.name);
+       if (newItem.name == "") this.actionsText = state.showModal = actionsTextMapping.add.option1
+       else if (rta === true) this.actionsText = state.showModal = actionsTextMapping.add.option2
+       else if (newItem.name.length < 3) this.actionsText = state.showModal = actionsTextMapping.add.option3
+       else newList
       commit("FILL_SHOPPINGLIST", newList)
     },
     changeShow({ commit, state }) {
@@ -56,7 +68,8 @@ export default new Vuex.Store({
       commit("CHANGE_SHOWMODAL", newShowModal)
     },
     changeTextmodal({ commit, state }) {
-      const newActionsText = actionsTextMapping[state.currentAction]
+      const newActionsText = this.actionsText
+      //console.log(newActionsText)
       commit("CHANGE_ACTIONSTEXT", newActionsText)
     },
     cancelModal({ commit, state }) {
@@ -66,9 +79,11 @@ export default new Vuex.Store({
     removeItem({ commit, state }, { id }) {
       const newLis = [...state.shoppingList.filter(item => item.id !== id)]
       state.currentAction = "delete";
+      this.actionsText = actionsTextMapping.delete
       commit("FILL_SHOPPINGLIST", newLis)
     },
     editItem({ commit }, { id }) {
+
       commit("CHANGE_EDITING", id)
     },
     updateFilter({ commit }, { filter }) {
