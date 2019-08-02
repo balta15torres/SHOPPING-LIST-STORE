@@ -16,9 +16,9 @@ const actionsTextMapping = {
 export default new Vuex.Store({
   state: {
     shoppingList: [
-      { "id": 0, "name": "pera", "editing": false, "complete": false },
-      { "id": 1, "name": "manzana", "editing": false, "complete": false },
-      { "id": 2, "name": "melon", "editing": false, "complete": false },
+      //{ "id": 0, "name": "pera", "editing": false, "complete": false },
+      // { "id": 1, "name": "manzana", "editing": false, "complete": false },
+      // { "id": 2, "name": "melon", "editing": false, "complete": false },
     ],
     showModal: false,
     filter: "all",

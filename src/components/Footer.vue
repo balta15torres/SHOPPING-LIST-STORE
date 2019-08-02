@@ -1,5 +1,6 @@
 <template>
   <div class="Footer">
+    <hr />
     <div class="Footer__summary">
       <label>
         <input type="checkbox" @change="markAll()" />
@@ -19,7 +20,7 @@
       <button :class="{ active:filter == 'active'}" @click="setFilter('active')">Active</button>
       <button :class="{ active:filter == 'complete'}" @click="setFilter('complete')">Completed</button>
     </div>
-    <hr />
+   
   </div>
 </template>
 
@@ -78,7 +79,7 @@ export default {
 
 <style lang="scss">
 .Footer {
-  width: 50%;
+  margin: 2%;
   font-weight:bold;
   color: $blue-vue;
   .Footer__summary {
@@ -86,6 +87,8 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 40px;
+    margin-top:20px;
+    margin-bottom: 20px;
     p {
       display: flex;
       align-items: center;

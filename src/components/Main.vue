@@ -52,7 +52,7 @@
         </template>
       </ul>
     </div>
-    <hr />
+    
   </div>
 </template>
 
@@ -104,7 +104,7 @@ export default {
       //else this.addItem({ item: this.newItem }),this.cleanInput()
       this.addItem({ item: this.newItem });
       this.changeTextmodal();
-      console.log(this.actionsText);
+      this.cleanInput()
     },
     cleanInput() {
       this.newItem = "";
@@ -133,7 +133,7 @@ export default {
 
 <style lang="scss">
 .Main {
-  width: 50%;
+  margin: 2%;
   ul {
     display: flex;
     padding-left: 0;

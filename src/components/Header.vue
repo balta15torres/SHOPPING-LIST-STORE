@@ -22,7 +22,7 @@ export default {
  
  <style lang="scss">
 .Header {
-  width: 50%;
+ margin: 2%;
 font-weight:bold;
       color:$blue-vue;
   .Header__logo {
