@@ -20,10 +20,10 @@ export default new Vuex.Store({
       // { "id": 1, "name": "manzana", "editing": false, "complete": false },
       // { "id": 2, "name": "melon", "editing": false, "complete": false },
     ],
+    actionsText:"",
     showModal: false,
     filter: "all",
     currentAction: null,
-    actionsText: ""
   },
   mutations: {
     FILL_SHOPPINGLIST(state, list) {
@@ -55,12 +55,13 @@ export default new Vuex.Store({
       }
       const newList = [...state.shoppingList, newItem]
       state.currentAction = "add";
-       let number = /[1-9]/
-       let rta = number.test(newItem.name);
-       if (newItem.name == "") this.actionsText = state.showModal = actionsTextMapping.add.option1
-       else if (rta === true) this.actionsText = state.showModal = actionsTextMapping.add.option2
-       else if (newItem.name.length < 3) this.actionsText = state.showModal = actionsTextMapping.add.option3
-       else newList
+      state.actionsText = "asd";
+       //let number = /[1-9]/
+       //let rta = number.test(newItem.name);
+       //if (newItem.name == "") this.actionsText = state.showModal = actionsTextMapping.add.option1
+       //else if (rta === true) this.actionsText = state.showModal = actionsTextMapping.add.option2
+       //else if (newItem.name.length < 3) this.actionsText = state.showModal = actionsTextMapping.add.option3
+       //else newList
       commit("FILL_SHOPPINGLIST", newList)
     },
     changeShow({ commit, state }) {

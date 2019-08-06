@@ -94,7 +94,7 @@ export default {
       align-items: center;
       justify-content: center;
       background-color: $green-vue;
-      border: 2px outset #dddddd;
+      border: 1px outset #dddddd;
       border-radius: 5px;
       height: 35px;
       width: 25%;
@@ -107,6 +107,7 @@ export default {
       font-size: 15px;
       font-weight:bold;
       color: $blue-vue;
+      border-width: 4px;
     }
   }
   .Footer__Buttons {
@@ -125,6 +126,7 @@ export default {
       margin-right: 15px;
       height: 40px;
       font-weight:bold;
+      border-width: 4px;
     }
   }
 }

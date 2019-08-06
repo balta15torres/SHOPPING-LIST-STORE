@@ -52,7 +52,6 @@
         </template>
       </ul>
     </div>
-    
   </div>
 </template>
 
@@ -78,8 +77,12 @@ export default {
     },
     ...mapGetters({
       shoppingList: "itemsFiltered"
+    }),
+    ...mapState({
+      actionsText: state => state.actionsText
     })
   },
+
   methods: {
     ...mapActions({
       addItem: "addItem",
@@ -90,6 +93,9 @@ export default {
       checking: "checking"
     }),
     createItem() {
+      this.actionsText = "balta";
+      //if(this.newItem.name.trim() === "")
+
       //  let er = /^[a-z]{3,}$/i;
       //   let rta = er.test(this.newItem);
       //    rta === true
@@ -104,7 +110,7 @@ export default {
       //else this.addItem({ item: this.newItem }),this.cleanInput()
       this.addItem({ item: this.newItem });
       this.changeTextmodal();
-      this.cleanInput()
+      this.cleanInput();
     },
     cleanInput() {
       this.newItem = "";
@@ -126,7 +132,7 @@ export default {
     },
     beforeEditItem(item) {
       item.editing = false;
-    },
+    }
   }
 };
 </script>
@@ -147,8 +153,8 @@ export default {
       border-radius: 5px;
       height: 30px;
       width: 75%;
-      font-weight:bold;
-      color:$blue-vue;
+      font-weight: bold;
+      color: $blue-vue;
       margin-left: 10px;
     }
     button {
@@ -157,13 +163,20 @@ export default {
       height: 35px;
       margin: 10px;
       border-radius: 5px;
+      border-width: 4px;
+      display: flex;
+      justify-content: center;
+      img {
+        height: 20px;
+        width: 20px;
+      }
     }
   }
   .Main__li {
     .Main__li--list {
       width: 50%;
-      font-weight:bold;
-      color:$blue-vue;
+      font-weight: bold;
+      color: $blue-vue;
       li {
         display: flex;
         justify-content: flex-start;
@@ -178,9 +191,12 @@ export default {
       width: 35px;
       margin: 10px;
       border-radius: 5px;
+      border-width: 4px;
+      display: flex;
+      justify-content: center;
       img {
         height: 20px;
-        width: 18px;
+        width: 20px;
       }
     }
     .Main__li--edit {
@@ -190,7 +206,7 @@ export default {
       background-color: $blue-vue;
     }
     .input__editing {
-      margin-top:22px;
+      margin-top: 22px;
       border-radius: 5px;
       height: 35px;
       font-size: 18px;
@@ -213,7 +229,6 @@ export default {
       background-color: $blue-vue;
     }
   }
-  
 }
 .complete {
   text-decoration: line-through;
